@@ -1,0 +1,146 @@
+
+{%- capture video_data -%}
+[
+  {%- for video in section.blocks -%}
+    {% assign heading_font = video.settings.heading_font %}
+    {% assign subheading_font = video.settings.subheading_font %}
+    {% assign button_font = video.settings.button_font %}
+    {
+      "title": "{{ video.settings.heading | escape }}",
+      "description": "{{ video.settings.textarea | escape }}",
+      "image": "{{ video.settings.image | img_url: 'master' }}",
+      "mobileImage": "{{ video.settings.mimage | img_url: 'master' }}",
+      "id": "{{ video.id }}",
+      "textposition": "{{ video.settings.text_position }}",
+      "btnlink": "{{ video.settings.button_link | escape }}",
+      "btntext": "{{ video.settings.button_text | escape }}",
+      "headingcolor": "{{ video.settings.heading_color }}",
+      "subheadingcolor": "{{ video.settings.subheading_color }}",
+      "btntextcolor": "{{ video.settings.button_text_color }}",
+      "btnbgcolor": "{{ video.settings.button_bg_color }}",
+      "headingfont": "{{ heading_font.family }}",
+      "headingweight": "{{ heading_font.weight }}",
+      "subheadingfont": "{{ subheading_font.family }}",
+      "subheadingweight": "{{ subheading_font.weight }}",
+      "buttonfont": "{{ button_font.family }}",
+      "buttonweight": "{{ button_font.weight }}"
+    }{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+]
+{%- endcapture -%}
+
+<div class="u-overflow-x-hidden">
+  
+    <slider
+      :slides="{{ video_data | escape }}">
+    </slider>
+  
+</div>
+{% schema %}
+  {
+    "name": "Slider",
+  "class":"slider_custom_section",
+    "settings": [],
+  "blocks":[
+    {
+      "type":"image",
+      "name":"Slide",
+      "settings":[
+        {
+          "type":"image_picker",
+          "id":"image",
+          "label":"Desktop Image"
+        },
+        {
+          "type":"image_picker",
+          "id":"mimage",
+          "label":"Mobile Image"
+        },
+        {
+          "type":"text",
+          "id":"heading",
+          "label":"Heading"
+        },
+        {
+          "type":"textarea",
+          "id":"textarea",
+          "label":"Subheading"
+        },
+        {
+          "type":"text",
+          "id":"button_text",
+          "label":"Button Text"
+        },
+        {
+          "type":"url",
+          "id":"button_link",
+          "label":"Button Link"
+        },
+        {
+          "type":"select",
+          "id":"text_position",
+          "label":"Text Position",
+          "options":[
+            {
+              "value":"left",
+              "label":"Left Position"
+            },
+            {
+              "value":"center",
+              "label":"Center Position"
+            },
+            {
+              "value":"right",
+              "label":"Right Position"
+            }
+          ]
+        },
+        {
+          "type":"font_picker",
+          "id":"heading_font",
+          "label":"Heading Font",
+          "default": "helvetica_n4"
+        },
+        {
+          "type":"color",
+          "id":"heading_color",
+          "label":"Heading Color"
+        },
+        {
+          "type":"font_picker",
+          "id":"subheading_font",
+          "label":"Subheading Font",
+          "default": "helvetica_n4"
+        },
+        {
+          "type":"color",
+          "id":"subheading_color",
+          "label":"Subheading Color"
+        },
+        {
+          "type":"font_picker",
+          "id":"button_font",
+          "label":"Buttton Font",
+          "default": "helvetica_n4"
+        },
+        {
+          "type":"color",
+          "id":"button_text_color",
+          "label":"Button Text Color"
+        },
+        {
+          "type":"color",
+          "id":"button_bg_color",
+          "label":"Button Background Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+      { 
+    "name":"Slideshow",
+    "category":"Slider"
+      }
+  ]
+  }
+{% endschema %}
